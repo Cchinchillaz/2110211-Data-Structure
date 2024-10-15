@@ -17,7 +17,7 @@ int main(){
     q2.push_back({k,0});
     
     for(auto [second,velo]:speed){
-        if(k-velo < 0){
+        if(k-velo <= 0){
             decrease.push_back(make_pair(second,0));
             q2.push_back(make_pair(0,second)) ;
             break;}
