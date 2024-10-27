@@ -21,3 +21,4 @@ T CP::queue<T>::min_element(std::vector<size_t> pos,Comp comp) const {
 }
 
 #endif
+

@@ -9,10 +9,10 @@ template <typename T>
 void CP::queue<T>::move_to_back(size_t pos) {
   //write your code here
   T temp = mData[(mFront+pos)%mCap];
-  for(int i=pos; i<mSize-1; ++i){
-    mData[(mFront+i)%mCap] =  mData[(mFront+i+1)%mCap];
+  for(auto i = pos; i<mSize-1; ++i){
+    mData[(mFront+i)%mCap] = mData[(mFront+i+1)%mCap];
   }
-  mData[(mFront + mSize -1)%mCap] = temp;
+  mData[(mFront+mSize-1)%mCap] = temp;
 }
 
 #endif
