@@ -33,7 +33,7 @@ public:
         // Your code here
         SparseGraph T(V);
         for (int i=0; i<E.size(); ++i) {
-            for(const auto &b: E[i]){
+            for(auto &b: E[i]){
                 T.AddEdge(b,i);
             }
         }

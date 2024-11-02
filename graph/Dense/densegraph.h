@@ -3,47 +3,44 @@
 
 // Your code here
 #include <vector>
+
 using namespace std;
+
 class DenseGraph{
 public:
-    DenseGraph() {
-        // Your code here
-        DenseGraph(3);
-    }
+    DenseGraph(): DenseGraph(3){}
 
     DenseGraph(int n_in) : n(n_in), edges(n_in) {
         // Your code here
-        for (auto& x : edges)
-            x.resize(n_in);
+        for(auto& v:edges) v.resize(n_in);
     }
 
     DenseGraph(const DenseGraph& G) : n(G.n), edges(G.edges){}
-
+    
     void AddEdge(int a, int b) {
         // Your code here
-        edges[a][b] = true;
+       edges[a][b] = true;
     }
 
     void RemoveEdge(int a, int b) {
         // Your code here
-        edges[a][b] = false;
+       edges[a][b] = false;
     }
 
     bool DoesEdgeExist(int a, int b) const {
         // Your code here
-        return edges[a][b];
+      return edges[a][b];
     }
 
     DenseGraph Transpose() const {
         // Your code here
-        DenseGraph T(n);
-        for(int i=0; i<n; ++i){
-            for(int j=0; j<n; ++j){
-                T.edges[i][j] = edges[i][j]; 
-            }
+      DenseGraph T(n);
+      for(int i=0;i<n;++i){
+        for(int j=0;j<n;++j){
+            T.edges[j][i] = edges[i][j];
         }
-
-        return T;
+      }
+     return T;
     }
 
 protected:
