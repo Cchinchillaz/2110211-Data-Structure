@@ -1,24 +1,23 @@
 #include<bits/stdc++.h>
 using namespace std;
+bool check[200002] = {false};
+int cnt,n;
 
-int n,cnt=0;
-const int MAX_N = 2e5+5;
-bool check[MAX_N] = {false};
-
-void findChildren(int m){
-    if(m>=n) return;
-    check[m] = true;
+void findDescendant(int node){
+    if(node>=n) return;
     ++cnt;
-    findChildren(2*m+1);
-    findChildren(2*m+2);
+    check[node] = true;
+    findDescendant(2*node+1);
+    findDescendant(2*node+2);
 }
 
 int main(){
-    int m;
-    cin >> n >> m;
-    findChildren(m);
+    ios_base::sync_with_stdio(0); cin.tie(0);;
+    int node; cnt=0;
+    cin >> n >> node;
+    findDescendant(node);
     cout << cnt << "\n";
-    for(int i=0;i<n; ++i){
-        if(check[i]) cout << i << " ";
+    for(int i=0;i<n;++i){
+        if(check[i])cout << i << " ";
     }
 }

@@ -1,53 +1,39 @@
 #include<bits/stdc++.h>
+#define ll long long
+
 using namespace std;
 
-//1. ปมหน่ึงเป็นลูกของอีกปมหน่ึง
-// 2. ปมหน่ึงเป็นบรรพบุรุษของอีกปมหน่ึง
-// 3. ปมทั้งสองอยู่คนละความลกึ (หรือระดับชั้นในต้นไม้) กัน
-// 4. ปมทั้งสองอยู่ที่ความลึก (หรือระดับชั้นในต้นไม้) เดียวกัน
-long long findDepth(long long node,long long k){
+ll findDepth(ll node, ll k){
     if(k==1) return node;
-    long long ans = 0;
-    node += 1;
+    ll depth = 0;
+    ++node;
     node *= k-1;
     while(node >= k){
-        node /= k;
-        ++ans;
-    }
-    return ans;
+        node/=k;
+        ++depth; 
+    } 
+    return depth;
 }
 
 int main(){
-    ios_base::sync_with_stdio(0); cin.tie(0);
-    long long n,k,a,b;
+    ios_base::sync_with_stdio(false); cin.tie(0);
+    ll n,k,a,b;
+    int ans;
     cin >> n;
-    for(long long i=0; i<n; ++i){
-        int ans = 3;
+    while(n--){
+        ans = 3;
         cin >> k >> a >> b;
         if(findDepth(a,k) == findDepth(b,k)) ans = 4;
-        else if(a<b){
-            b = (b-1)/k;
-            if(b==a) ans = 1;
+        else{
+            if(a>b) swap(a,b);
+            if((b-1)/k == a) ans = 1;
             else{
-                while(b > a){
-                b = (b-1)/k;
-                if(b==a) break;
-            }
-            if(b==a) ans = 2;
+                while(b>a){
+                    b = (b-1)/k;
+                    if(b==a){ans = 2; break;}
+                }
             }
         }
-        else if(a>b){
-            a = (a-1)/k;
-            if(b==a) ans = 1;
-            else{
-                while(a > b){
-                a = (a-1)/k;
-                if(b==a) break;
-            }
-            if(b==a) ans = 2;
-            }
-        }
-
         cout << ans << " ";
     }
 }

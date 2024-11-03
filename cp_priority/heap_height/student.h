@@ -8,11 +8,10 @@
 template <typename T,typename Comp >
 int CP::priority_queue<T,Comp>::height() const {
   //write your code here
-  int k = mSize, ans = 0;
-  if(k==0) return -1;
-  while(k >= 2){
-    k /= 2;
-    ++ans;
+  if(mSize == 0) return -1;
+  int n = mSize, ans = 0;
+  while(n>=2){
+    n/=2; ++ans;
   }
   return ans;
 }

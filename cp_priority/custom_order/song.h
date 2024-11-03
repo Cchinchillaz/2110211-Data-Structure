@@ -26,18 +26,14 @@ class Song {
 
 //  you have to write something below this line 
 //  you *MIGHT* have to change the declaration of pq1 and pq2
-
-struct comp1 {
-  public:
-  bool operator() (Song &a, Song &b) const{
-    return (a.artist>b.artist) || (a.artist==b.artist && a.title>b.title);
+struct comp1{
+  bool operator() (Song &a, Song &b){
+    return (a.artist > b.artist || (a.artist == b.artist && a.title > b.title));
   }
 };
-
-struct comp2 {
-  public:
-  bool operator() (Song &a, Song &b) const{
-    return (a.count<b.count) || (a.count==b.count && a.artist>b.artist) || (a.count==b.count && a.artist==b.artist && a.title>b.title);
+struct comp2{
+   bool operator() (Song &a, Song &b){
+    return (a.count < b.count || (a.count == b.count && a.artist > b.artist) || (a.count == b.count && a.artist == b.artist && a.title > b.title));
   }
 };
 CP::priority_queue<Song,comp1> pq1;

@@ -6,13 +6,14 @@ int main(){
     int m,n,k;
     cin >> m;
     while(m--){
-        cin >> n >> k;
-        vector<int> v(n);
-        bool f = true;
-        for(int i=0; i<n; ++i){
-            cin >> v[i];
-            if(i>0 && v[(i-1)/k] < v[i]){f = false;}
-        }
-        cout << (f ? "true" : "false") << '\n';
+       cin >> n >> k;
+       vector<int> v(n);
+       bool f = true;
+       for(int i=0; i<n; ++i){
+        cin >> v[i];
+        if(f && i>=1 && v[(i-1)/k] < v[i]) f = false;
+       }
+      cout << (f? "true\n":"false\n");
+
     }
 }

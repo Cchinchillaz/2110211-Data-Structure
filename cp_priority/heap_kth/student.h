@@ -10,28 +10,19 @@ T CP::priority_queue<T,Comp>::get_kth(size_t k) const {
   //write your code here
   //can include anything
   using namespace std;
-  std::vector<T> v;
-  int end = (mSize>7)? 7:mSize;
-  for(int i=0; i<k; ++i){
-    v.push_back(mData[i]);
+  int n = k;
+  if(n == 1){return mData[0];}
+  else if(n==2){
+    return (mLess(mData[1],mData[2])? mData[2]:mData[1]);
   }
-  std::sort(v.begin(), v.end(), [this](const T &a, const T &b) {
-    return !mLess(a, b); 
-  });
-  for(int i=k; i<end; ++i){
-    int j = 0;
-    for(j; j<k; ++j){
-      if(mLess(v[j],mData[i])){break;}
-    }
-    if(j<k){
-      for(int h = j+1; h<k; ++h){
-        v[h] = v[h-1];
-      }
-      v[j] = mData[i];
-    }
-    
+  else{
+    int max = mLess(mData[1],mData[2])? 2:1;
+    int min = mLess(mData[1],mData[2])? 1:2;
+    T x = mData[min];
+    if(2*max+1<mSize && mLess(x,mData[2*max+1])) x = mData[2*max+1];
+    if(2*max+2<mSize && mLess(x,mData[2*max+2])) x = mData[2*max+2];
+    return x;
   }
-  return v.back();
 }
 
 #endif
