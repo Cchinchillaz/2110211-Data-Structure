@@ -24,6 +24,8 @@ int main(){
     // x.x = 20;
     // vector<Test> a(2);
     // a.push_back(x);
-
+    int n = 0;
+    if(++n == 2) cout << "h\n";
+    cout << n;
     
 }

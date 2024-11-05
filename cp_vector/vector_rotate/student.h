@@ -5,20 +5,22 @@ using namespace std;
 template <typename T>
 void CP::vector<T>::rotate(iterator first, iterator last, size_t k) {
   //write your code here
-  int n = last-first; 
-  if(n==0 || k == 0) return;
-  int s = first-begin();
-  k %= n;
-  T *data = new T[k]();
-  for(int i = 0; i < k; ++i){
-    data[i] = mData[s+i]; 
+  int n = last-first;
+  if(n==0||k==0) return;
+  int start = first-begin();
+  int end = last-begin();
+  int move = n-k;
+  T *arr = new T[k]();
+  for(int i = 0; i<k; ++i){
+    arr[i] = mData[start+i];
   }
-  for(int i = s; i < s+n-k; ++i){
-    mData[i] = mData[i+k]; 
+  for(int i=0; i<move; ++i){
+    mData[start+i] = mData[start+i+k];
   }
-  for(int i = 0; i < k; ++i){
-    mData[s+n-k+i] = data[i];
+  for(int i=0; i<k; ++i){
+    mData[start+move+i] = arr[i];
   }
+
 }
 
 #endif
