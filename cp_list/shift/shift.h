@@ -1,8 +1,9 @@
 void shift(int k) {
 	// TODO: Add your code here
-	if(k==0 || mSize <= 1) return;
-	if(k>0) k %= mSize;
-	if(k<0){k =( mSize+(k%mSize))%mSize;}
+	int n = mSize;
+	if(k==0 || n <= 1) return;
+	if(k>0) k %= n;
+	if(k<0){k =(n+(k%n))%n;}
 	auto it = mHeader->next;
 	for(int i=0; i<k; ++i) it = it->next;	
 	mHeader->next->prev = mHeader->prev;
