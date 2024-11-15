@@ -1,28 +1,26 @@
-void splitList(list<T>& list1, list<T>& list2) {
-    // Add your code here
-    if(mSize == 0) return;
-    int n = mSize;
-    int a = (n+1)/2;   
-   
-    node *it1 = mHeader;
-    for(int i=0; i<a; ++i) it1 = it1->next;
-    auto it2 = it1->next;
+#ifndef __STUDENT_H_
+#define __STUDENT_H_
 
-    list1.mHeader->prev->next = mHeader->next;
-    mHeader->next->prev = list1.mHeader->prev;
-    list1.mHeader->prev = it1;
-    it1->next = list1.mHeader;
-    list1.mSize += a;
-    
-    list2.mHeader->prev->next = it2;
-    it2->prev = list2.mHeader->prev;
-    list2.mHeader->prev = mHeader->prev;
-    mHeader->prev->next = list2.mHeader;
-    list2.mSize += (n-a);
-    
+template <typename T>
+CP::list<T> CP::list<T>::split(iterator it,size_t pos) {
+  //write your code here
+  CP::list<T> result;
+  if(it == end()) return result;
+  else{
+    mHeader->prev->next = result.mHeader;
+    result.mHeader->prev = mHeader->prev;
 
-    mHeader->prev = mHeader;
-    mHeader->next = mHeader;
-    mSize = 0;
+    mHeader->prev = it.ptr->prev;
+    it.ptr->prev->next = mHeader;
 
+    it.ptr->prev = result.mHeader;
+    result.mHeader->next = it.ptr;
+
+    result.mSize = mSize-pos;
+    mSize = pos;
+  }
+
+  return result;
 }
+
+#endif

@@ -5,14 +5,12 @@
 #include <iostream>
 //#pragma once
 
-namespace CP {
+namespace CP { 
 
 template <typename T>
 class list
 {
   protected:
-
-
     class node {
       friend class list;
       public:
@@ -21,23 +19,10 @@ class list
         node *next;
 
         node() :
-          data( T() ), prev( this ), next( this ) {
-          }
+          data( T() ), prev( this ), next( this ) { }
 
         node(const T& data,node* prev, node* next) :
-          data ( T(data) ), prev( prev ), next( next ) {
-          }
-
-        node(int key) :
-          data( T() ), prev( this ), next( this ) {
-          }
-
-        node(const T& data,node* prev, node* next,int key) :
-          data ( T(data) ), prev( prev ), next( next ) {
-          }
-
-        ~node() {
-        }
+          data ( T(data) ), prev( prev ), next( next ) { }
     };
 
     class list_iterator {
@@ -50,13 +35,13 @@ class list
 
         list_iterator(node *a) : ptr(a) { }
 
-        list_iterator& operator++() {
-          ptr = ptr->next;
+        list_iterator& operator++() { 
+          ptr = ptr->next; 
           return (*this);
         }
 
-        list_iterator& operator--() {
-          ptr = ptr->prev;
+        list_iterator& operator--() { 
+          ptr = ptr->prev; 
           return (*this);
         }
 
@@ -84,21 +69,26 @@ class list
   protected:
     node *mHeader; // pointer to a header node
     size_t mSize;
-    bool enforce_o2U732u;
+
+
+    // SPECIAL FOR CHECK UP ONLY
+    std::vector<node*> remember;
+
 
   public:
     //-------------- constructor & copy operator ----------
 
     // copy constructor
-    list(const list<T>& a) : mHeader( new node(18373) ), mSize( 0 ), enforce_o2U732u(false) {
-      for (iterator it = a.begin();it != a.end();it++) {
-        push_back(*it);
+    list(const list<T>& a ) :
+      mHeader( new node() ), mSize( 0 ) {
+      for (auto &x : *this) {
+        push_back(x);
       }
     }
 
     // default constructor
-    list() : mHeader( new node(18373) ), mSize( 0 ), enforce_o2U732u(false) {
-    }
+    list() :
+      mHeader( new node() ), mSize( 0 ) { }
 
     // copy assignment operator using copy-and-swap idiom
     list<T>& operator=(list<T> other) {
@@ -111,6 +101,13 @@ class list
     }
 
     ~list() {
+      if (remember.size() > 0) {
+        for (auto &x : remember)
+          delete x;
+        mHeader->prev = mHeader;
+        mHeader->next = mHeader;
+        mSize = 0;
+      }
       clear();
       delete mHeader;
     }
@@ -156,8 +153,7 @@ class list
     }
 
     iterator insert(iterator it,const T& element) {
-      if (enforce_o2U732u) std::cout << "error insert" << std::endl;
-      node *n = new node(element,it.ptr->prev, it.ptr,18373);
+      node *n = new node(element,it.ptr->prev, it.ptr);
       it.ptr->prev->next = n;
       it.ptr->prev = n;
       mSize++;
@@ -165,7 +161,6 @@ class list
     }
 
     iterator erase(iterator it) {
-      if (enforce_o2U732u) std::cout << "error erase" << std::endl;
       iterator tmp(it.ptr->next);
       it.ptr->prev->next = it.ptr->next;
       it.ptr->next->prev = it.ptr->prev;
@@ -175,31 +170,37 @@ class list
     }
 
     void clear() {
-      if (enforce_o2U732u) std::cout << "error clear" << std::endl;
       while (mSize > 0) erase(begin());
     }
 
-    void print() {
-      std::cout << "Size = " << mSize << std::endl;
-      int i = 0;
-      iterator before;
-      std::cout << "From FRONT to BACK: ";
-      for (auto it = begin();it!=end();before = it, it++,i++) {
-        std::cout << *it << " ";
+    bool check();
+
+    void messup() {
+      node* n = mHeader;
+      //save everything in "remember" for special destruction
+      remember.resize(mSize);
+      for (int i = 0;i < mSize;i++) {
+        n = n->next;
+        remember[i] = n;
       }
-      std::cout << std::endl << "From BACK to FRONT: ";
-      auto it = end();
-      while (it != begin()) {
-        --it;
-        std::cout << *it << " ";
-      }
-      std::cout << std::endl;
+
+      //DO NOT EDIT ANYTHING ABOVE THIS LINE
+      //ONLY EDIT BELOW THIS LINE
+
+      //sample case of mess up, you can write any other case
+      mHeader->next->next = mHeader->next->next->next->next->next;
+
     }
 
-    void extract(const T& value,iterator a, iterator b,CP::list<T>& output);
-
-    void set_check(int value) {
-      enforce_o2U732u = (value != 0);
+    void print() {
+      std::cout << " Size = " << mSize << std::endl;
+      std::cout << " Header address = " << (mHeader) << " (prev = " << mHeader->prev << " next = " << mHeader->next << ")" << std::endl;
+      int i = 0;
+      iterator before;
+      for (iterator it = begin();it!=end();before = it, it++,i++) {
+        std::cout << "Node " << i << ": " << *it;
+        std::cout << " (prev = " << it.ptr->prev << ", I'm at " << it.ptr << ", next = " << it.ptr->next << ")" <<  std:: endl;
+      }
     }
 
 };

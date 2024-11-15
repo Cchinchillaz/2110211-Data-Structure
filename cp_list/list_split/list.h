@@ -3,7 +3,6 @@
 
 #include <stdexcept>
 #include <iostream>
-#include <map>
 //#pragma once
 
 namespace CP {
@@ -11,7 +10,7 @@ namespace CP {
 template <typename T>
 class list
 {
-    public:
+  protected:
     class node {
       friend class list;
       public:
@@ -76,16 +75,16 @@ class list
     //-------------- constructor & copy operator ----------
 
     // copy constructor
-    list(list<T>& a) :
+    list(const list<T>& a ) :
       mHeader( new node() ), mSize( 0 ) {
-      for (iterator it = a.begin();it != a.end();it++) {
-        push_back(*it);
+      for (auto &x : *this) {
+        push_back(x);
       }
     }
 
     // default constructor
-    list() :
-      mHeader( new node() ), mSize( 0 ) { }
+    list() : mHeader( new node() ), mSize( 0 ) {
+    }
 
     // copy assignment operator using copy-and-swap idiom
     list<T>& operator=(list<T> other) {
@@ -164,36 +163,18 @@ class list
     }
 
     void print() {
-        /*
-      std::cout << " Header address = " << (mHeader) << std::endl;
-      int i;
+      std::cout << " Size = " << mSize << std::endl;
+      std::cout << " Header address = " << (mHeader) << " (prev = " << mHeader->prev << " next = " << mHeader->next << ")" << std::endl;
+      int i = 0;
       iterator before;
       for (iterator it = begin();it!=end();before = it, it++,i++) {
         std::cout << "Node " << i << ": " << *it;
         std::cout << " (prev = " << it.ptr->prev << ", I'm at " << it.ptr << ", next = " << it.ptr->next << ")" <<  std:: endl;
-      }*/
-      std::cout<<"< ";
-      for (iterator it = begin();it!=end(); it++) {
-          std::cout<<*it<<" ";
       }
-      std::cout<<">"<<std::endl;
     }
 
-    void appendMap(std::map<node*,int>& m) {
-        node* tmp = mHeader->next;
-        for (int i = 0; i < mSize; i++) {
-            m[tmp] = 1;
-        }
-    }
+    CP::list<T> split(iterator it,size_t pos);
 
-    bool checkInMap(std::map<node*,int>& m) {
-        node* tmp = mHeader->next;
-        for (int i = 0; i < mSize; i++) {
-            if (m[tmp] != 1) return false;
-        }
-        return true;
-    }
-    #include "student.h"
 };
 
 }

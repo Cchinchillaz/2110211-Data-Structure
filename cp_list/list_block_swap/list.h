@@ -11,8 +11,6 @@ template <typename T>
 class list
 {
   protected:
-
-
     class node {
       friend class list;
       public:
@@ -21,23 +19,10 @@ class list
         node *next;
 
         node() :
-          data( T() ), prev( this ), next( this ) {
-          }
+          data( T() ), prev( this ), next( this ) { }
 
         node(const T& data,node* prev, node* next) :
-          data ( T(data) ), prev( prev ), next( next ) {
-          }
-
-        node(int key) :
-          data( T() ), prev( this ), next( this ) {
-          }
-
-        node(const T& data,node* prev, node* next,int key) :
-          data ( T(data) ), prev( prev ), next( next ) {
-          }
-
-        ~node() {
-        }
+          data ( T(data) ), prev( prev ), next( next ) { }
     };
 
     class list_iterator {
@@ -84,21 +69,22 @@ class list
   protected:
     node *mHeader; // pointer to a header node
     size_t mSize;
-    bool enforce_o2U732u;
+
 
   public:
     //-------------- constructor & copy operator ----------
 
     // copy constructor
-    list(const list<T>& a) : mHeader( new node(18373) ), mSize( 0 ), enforce_o2U732u(false) {
-      for (iterator it = a.begin();it != a.end();it++) {
-        push_back(*it);
+    list(const list<T>& a ) :
+      mHeader( new node() ), mSize( 0 ) {
+      for (auto &x : *this) {
+        push_back(x);
       }
     }
 
     // default constructor
-    list() : mHeader( new node(18373) ), mSize( 0 ), enforce_o2U732u(false) {
-    }
+    list() :
+      mHeader( new node() ), mSize( 0 ) { }
 
     // copy assignment operator using copy-and-swap idiom
     list<T>& operator=(list<T> other) {
@@ -156,8 +142,7 @@ class list
     }
 
     iterator insert(iterator it,const T& element) {
-      if (enforce_o2U732u) std::cout << "error insert" << std::endl;
-      node *n = new node(element,it.ptr->prev, it.ptr,18373);
+      node *n = new node(element,it.ptr->prev, it.ptr);
       it.ptr->prev->next = n;
       it.ptr->prev = n;
       mSize++;
@@ -165,7 +150,6 @@ class list
     }
 
     iterator erase(iterator it) {
-      if (enforce_o2U732u) std::cout << "error erase" << std::endl;
       iterator tmp(it.ptr->next);
       it.ptr->prev->next = it.ptr->next;
       it.ptr->next->prev = it.ptr->prev;
@@ -175,37 +159,24 @@ class list
     }
 
     void clear() {
-      if (enforce_o2U732u) std::cout << "error clear" << std::endl;
       while (mSize > 0) erase(begin());
     }
 
     void print() {
-      std::cout << "Size = " << mSize << std::endl;
       int i = 0;
       iterator before;
-      std::cout << "From FRONT to BACK: ";
-      for (auto it = begin();it!=end();before = it, it++,i++) {
-        std::cout << *it << " ";
+      for (iterator it = begin();it!=end();before = it, it++,i++) {
+        std::cout << it.ptr->data << " ";
       }
-      std::cout << std::endl << "From BACK to FRONT: ";
-      auto it = end();
-      while (it != begin()) {
-        --it;
-        std::cout << *it << " ";
-      }
-      std::cout << std::endl;
+	  std::cout << "\n";
     }
 
-    void extract(const T& value,iterator a, iterator b,CP::list<T>& output);
-
-    void set_check(int value) {
-      enforce_o2U732u = (value != 0);
-    }
+	//-------------- For student.h --------------
+	void block_swap(iterator a1, iterator a2, iterator b1, iterator b2);
 
 };
 
 }
 
 #endif
-
 
