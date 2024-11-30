@@ -41,9 +41,9 @@ public:
     // You can also put your code here
     bool isSameNode(Node *n, Node *m){
         if(n == NULL && m == NULL) return true;
-        else if(n == NULL|| m == NULL) return false;
+        if(n == NULL || m == NULL) return false;
         else if(n->data != m->data) return false;
-        else {return isSameNode(n->left,m->left) && isSameNode(n->right,m->right);} 
+        else return isSameNode(n->left,m->left) && isSameNode(n->right,m->right);
     }
 protected:
     void insertAt(Node*& r, int x) {

@@ -6,15 +6,12 @@
 template <typename T>
 typename CP::list<T>::iterator CP::list<T>::reverse(iterator a, iterator b) {
   //write your code here
-  if(mSize==0 || a==b) return a;
+  if(mSize == 0 || a == b)return a;
   iterator it = a;
   --b;
-  while(a != b){
-    std::swap((*a),(*b));
-    if(--b == a) break;
-    ++a;
-  }
-  return it;
+  while(it != b){
+    std::swap(*it,*b); if(--b == it) break;++it;}
+  return a;
 }
 
 #endif

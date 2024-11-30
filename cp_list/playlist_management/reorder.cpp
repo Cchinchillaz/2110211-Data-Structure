@@ -195,18 +195,18 @@ class list
 
     void reorder(int pos,std::vector<int> selected) {
       //write your code only here
-      int idx = 0,p=0;
-      // iterator for pos
-      auto posIterator = begin();
-      for(int i=0;i<pos;++i) ++posIterator;
-      for(auto it = begin();it != end() && idx < selected.size();++p){
-        if(p == selected[idx]){
+      int idx = 0,cnt = 0;
+      auto it = begin();
+      auto p = begin();
+      for(int i=0;i<pos;++i){++p;}
+      while(it != end() && idx<selected.size()){
+        if(cnt == selected[idx]){
+          insert(p,*it);
           ++idx;
-          posIterator = insert(posIterator,*(it));
-          ++posIterator;
           it = erase(it);
         }
         else ++it;
+        ++cnt;
       }
     }
 

@@ -7,14 +7,14 @@ CP::list<T> CP::list<T>::split(iterator it,size_t pos) {
   CP::list<T> result;
   if(it == end()) return result;
   else{
-    mHeader->prev->next = result.mHeader;
     result.mHeader->prev = mHeader->prev;
+    mHeader->prev->next =result.mHeader;
 
-    mHeader->prev = it.ptr->prev;
     it.ptr->prev->next = mHeader;
-
-    it.ptr->prev = result.mHeader;
-    result.mHeader->next = it.ptr;
+    mHeader->prev = it.ptr->prev;
+   
+    result.mHeader->next = it.ptr; 
+    it.ptr->prev = result.mHeader; 
 
     result.mSize = mSize-pos;
     mSize = pos;

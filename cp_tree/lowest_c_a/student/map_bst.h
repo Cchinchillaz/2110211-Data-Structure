@@ -1,7 +1,9 @@
-#include <iostream>
-#include <vector>
-#include <string>
 
+#ifndef _CP_MAP_BST_INCLUDED_
+#define _CP_MAP_BST_INCLUDED_
+
+#include <iostream>
+//#pragma once
 
 namespace CP {
 
@@ -299,56 +301,10 @@ class map_bst
         if (!checkInorder(r->left)) return false;
         return checkInorder(r->right);
     }
-
-    //---------------------------- tree traversal ------------------------
-    void print_key_preorder(node *r) {
-      if (r==NULL) return ;
-      std::cout << r->data.first << " ";
-      print_key_preorder(r->left);
-      print_key_preorder(r->right);
-    }
-
-    void print_key_inorder(node *r) {
-      if (r==NULL) return ;
-      print_key_inorder(r->left);
-      std::cout << r->data.first << " ";
-      print_key_inorder(r->right);
-    }
-
-    void print_key_postorder(node *r) {
-      if (r==NULL) return ;
-      print_key_postorder(r->left);
-      print_key_postorder(r->right);
-      std::cout << r->data.first << " ";
-    }
-
-    void print_key_preorder() { print_key_preorder(mRoot); std::cout << std::endl;}
-    void print_key_inorder() { print_key_inorder(mRoot); std::cout << std::endl; }
-    void print_key_postorder() { print_key_postorder(mRoot); std::cout << std::endl; }
+    iterator lca(iterator p, iterator q) const;
+    iterator recursive(node* n,iterator p, iterator q) const;
 };
 
 }
 
-//you can add other function as well BUT CANNOT MODIFY MAIN nor map_bst class
-void recur(CP::map_bst<int,int> &bst,int l,int r) {
-  if(r<l) return;
-  int mid = (l+r)/2;
-  bst[mid] = 1;
-  recur(bst,l,mid-1);
-  recur(bst,mid+1,r);
-}
-void gen_best_bst(int n,CP::map_bst<int,int> &bst) {
-  recur(bst,1,n);
-}
-
-int main() {
-  int k;
-  int n;
-  std::cin >> k;
-  n = (2 << k) - 1;
-  CP::map_bst<int,int> bst;
-  gen_best_bst(n,bst);
-  bst.print_key_preorder();
-  bst.print_key_inorder();
-  bst.print_key_postorder();
-}
+#endif

@@ -7,33 +7,21 @@
 template <typename T>
 void CP::list<T>::extract(const T& value,iterator a, iterator b,CP::list<T>& output) {
   //write your code here
-  std::vector<iterator> v;
   int cnt = 0;
-  if(mSize==0 || a==b) return;
   for(auto it = a; it != b; ++it){
-    if(*(it) == value){
-     ++cnt;
-     it.ptr->prev->next = it.ptr->next;
-     it.ptr->next->prev = it.ptr->prev;
-     --mSize;
-     v.push_back(it.ptr);
-    }
+    if(*it == value){
+      it.ptr->prev->next = it.ptr->next;
+      it.ptr->next->prev = it.ptr->prev;
+      delete it.ptr;
+      --mSize;
+      ++cnt;
+    } 
   }
-  if(cnt != 0){
-    for(int i=0; i<v.size(); ++i){
-    if(i==0){
-      // output.mHeader->next = v[i];
-      v[0].ptr->prev = output.mHeader;
-    }
-    else{
-      v[i-1].ptr->next = v[i].ptr;
-      v[i].ptr->prev = v[i-1].ptr;
-    }
+  while(cnt--){
+    node *n = new node(value,output.mHeader,output.mHeader->next);
+    output.mHeader->next->prev = n;
+    output.mHeader->next = n;
     ++output.mSize;
-  }
-    v.back().ptr->next = output.mHeader->next;
-    output.mHeader->next->prev = v.back().ptr; 
-    output.mHeader->next = v[0].ptr;
   }
 }
 

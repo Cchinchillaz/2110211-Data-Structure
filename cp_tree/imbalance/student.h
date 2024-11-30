@@ -1,20 +1,18 @@
 // Your code here
-int getValueOfMostImbalanceNode(node *n,KeyT &max,int &b) {
+int imbalance(node* n,KeyT &k,int &b){
     if(n == NULL) return 0;
-    int lh = 0, rh = 0;
-    if(n->left != NULL) lh = getValueOfMostImbalanceNode(n->left,max,b);
-    if(n->right != NULL) rh = getValueOfMostImbalanceNode(n->right,max,b);
-    int imbalance = std::abs(lh-rh);
-    if(imbalance > b || (imbalance == b && mLess(n->data.first,max))){ b = imbalance; max = n->data.first;}
+    int lh = imbalance(n->left,k,b);
+    int rh = imbalance(n->right,k,b);
+    int i = std::abs(lh-rh);
+    if(i>b || i==b && mLess(n->data.first,k) ){k = n->data.first; b = i;}
     return 1+std::max(lh,rh);
-    
 }
 
 KeyT getValueOfMostImbalanceNode() {
     // Your code here
-    auto ans = mRoot->data.first;
-    int b = 0;
-    getValueOfMostImbalanceNode(mRoot,ans,b);
-    return ans;
+   KeyT ans = mRoot->data.first;
+   int b = 0;
+   imbalance(mRoot,ans,b);
+   return ans;
     
 }

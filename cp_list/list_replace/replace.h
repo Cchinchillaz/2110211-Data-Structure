@@ -3,8 +3,8 @@ void replace(const T& x, list<T>& y) {
   auto it = begin();
   while(it != end()){
     if(*it == x){
-      for(auto node:y) insert(it,node);
       it = erase(it);
+      for(auto node:y) insert(it,node);
     }
     else{++it;}
   }

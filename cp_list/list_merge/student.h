@@ -6,18 +6,16 @@ template <typename T>
 void CP::list<T>::merge(CP::list<CP::list<T>> &ls) {
   //write your code here
   for(auto it = ls.begin(); it != ls.end(); ++it){
-   
-    mHeader->prev->next = it->mHeader->next;
-    it->mHeader->next->prev = mHeader->prev;
-    it->mHeader->prev->next = mHeader;
-    mHeader->prev = it->mHeader->prev;
+   mHeader->prev->next = it->mHeader->next;
+   it->mHeader->next->prev = mHeader->prev;
 
-    mSize += it->mSize;
-    // ตัดปม
+   mHeader->prev = it->mHeader->prev;
+   it->mHeader->prev->next = mHeader;
+   mSize += it->mSize;
 
-    it->mHeader->next = it->mHeader;
-    it->mHeader->prev = it->mHeader;
-    it->mSize = 0;
+   it->mHeader->next = it->mHeader;
+   it->mHeader->prev = it->mHeader;
+   it->mSize = 0;
   }
 }
 
